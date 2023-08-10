@@ -6,6 +6,14 @@ namespace AUG2023_IBM_Day4AfternoonNG
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(o => {
+
+
+                o.IdleTimeout = TimeSpan.FromMinutes(30);
+
+            });
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -22,9 +30,11 @@ namespace AUG2023_IBM_Day4AfternoonNG
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=ValidationEg}/{action=AddNewProject}/{id?}");
+                pattern: "{controller=StateMgmt}/{action=StoreSessionState}/{id?}");
 
             app.Run();
         }
